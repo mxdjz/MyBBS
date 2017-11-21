@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.bbs.notice">
+    <resultMap type="com.bbs.notice.model.DO.NoticeDO" id="notice">
+        <result property="noticeId" column="NOTCIE_ID" javaType="string" jdbcType="CHAR" />
+        <result property="message" column="MESSAGE" javaType="string" jdbcType="VARCHAR" />
+        <result property="noticeType" column="NOTICE_TYPE" javaType="int" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <select id="findNoticeById" parameterType="string" resultMap="notice">
+        select * from T_BBS_NOTICE where NOTICE_ID = #{id}
+    </select>
+    
+    <insert id="addNotice" parameterMap="notice">
+        insert into T_BBS_NOTICE values(#{noticeId}, #{message}, #{noticeType})
+    </insert>
+</mapper>

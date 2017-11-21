@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+    使用mapper接口形式
+    namespace：mapper接口路径
+ -->
+<mapper namespace="com.bbs.post.mapper.PlateMapper">
+    <!-- 
+        resultMap：自定义查询结果集
+             type：结果集类型，可使用map、实体类
+             id  ：自定义结果集唯一标识
+     -->
+<!--     <resultMap type="com.bbs.post.model.DO.PlateDO" id="plate"> -->
+<!--         id字段 -->
+<!--         <id property="plateId" column="PLATE_ID" javaType="int" jdbcType="INTEGER" /> -->
+<!--         一般属性字段 -->
+<!--         <result property="plateTitle" column="PLATE_TITLE" javaType="string" jdbcType="VARCHAR" /> -->
+<!--         <result property="plateSubTitle" column="PLATE_SUB_TITLE" javaType="string" jdbcType="VARCHAR" /> -->
+<!--         <result property="plateParentId" column="PLATE_PARENT_ID" javaType="int" jdbcType="INTEGER" /> -->
+<!--         <result property="imageUrl" column="IMAGE_URL" javaType="string" jdbcType="VARCHAR" /> -->
+<!--         <result property="description" column="DESCRI" javaType="string" jdbcType="VARCHAR" /> -->
+<!--     </resultMap> -->
+    
+    <!-- 
+        select：查询方法
+            id：查询方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
+            parameterType：查询方法参数类型，可以是简单数据类型，集合参数，实体类参数等
+            resultMap：返回结果集类型，引用当前映射文件内已定义的一个结果集
+    -->
+    <select id="getAllPlate" resultType="com.bbs.post.model.DO.PlateDO">
+        select * from T_BBS_PLATE
+    </select>
+    
+    <select id="findPlateById" parameterType="int" resultType="com.bbs.post.model.DO.PlateDO">
+        select * from T_BBS_PLATE where PLATE_ID = #{id}
+    </select>
+    
+    <!-- 
+        insert：插入方法
+            id：插入方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
+            parameterType：插入方法参数类型，可以是简单数据类型，集合参数，实体类参数等
+     -->
+    <insert id="addPlate" parameterType="com.bbs.post.model.DO.PlateDO" keyProperty="plateId" useGeneratedKeys="true" >
+        insert into T_BBS_PLATE 
+        values(#{plateId}, #{plateTitle}, #{plateSubTitle}, #{plateParentId}, #{imageUrl}, #{description}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{deleteFlag})
+    </insert>
+    
+    <!-- 
+        insert：更新方法
+            id：更新方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
+            parameterType：更新方法参数类型，可以是简单数据类型，集合参数，实体类参数等
+     -->
+    <update id="updatePlate" parameterType="com.bbs.post.model.DO.PlateDO">
+        update T_BBS_PLATE plate 
+           set plate.PLATE_TITLE = #{plateTitle}, plate.PLATE_SUB_TITLE = #{plateSubTitle},
+           	   plate.IMAGE_URL   = #{imageUrl},   plate.DESCRI = #{description},  
+               plate.UPDATE_BY   = #{updateBy},   plate.UPDATE_DATE = #{updateDate}
+         where plate.PLATE_ID = #{plateId}
+    </update>
+    
+    <!-- 
+        insert：删除方法（此处delete方法仍然使用update语句，因此delete标签主要是用于标记区别）
+            id：删除方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
+            parameterType：删除方法参数类型，可以是简单数据类型，集合参数，实体类参数等
+     -->
+    <delete id="deletePlate" parameterType="int">
+        update T_BBS_PLATE plate 
+           set plate.DELETE_FLAG = -1
+         where plate.PLATE_ID = #{id}
+    </delete>
+</mapper>

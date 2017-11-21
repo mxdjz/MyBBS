@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+    使用mapper接口形式
+    namespace：mapper接口路径
+ -->
+<mapper namespace="com.bbs.post.mapper.PostMapper">
+    <!-- 
+        resultMap：自定义查询结果集
+             type：结果集类型，可使用map、实体类
+             id  ：自定义结果集唯一标识
+     -->
+    
+    <!-- 
+        select：查询方法
+            id：查询方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
+            parameterType：查询方法参数类型，可以是简单数据类型，集合参数，实体类参数等
+            resultMap：返回结果集类型，引用当前映射文件内已定义的一个结果集
+    -->
+    
+    <select id="findPostById" parameterType="long" resultType="com.bbs.post.model.DO.PostDO" >
+        select * from T_BBS_POST where POST_ID = #{id}
+    </select>
+    
+    <select id="findPostListByPlateId" resultType="com.bbs.post.model.DO.PostDO" >
+        select * from T_BBS_POST where PLATE_ID = #{plateId}
+        <if test="index !=0 or num!=0">
+            limit #{index}, #{num}
+        </if>
+    </select>
+    
+    <!-- 
+        insert：插入方法
+            id：插入方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
+            parameterType：插入方法参数类型，可以是简单数据类型，集合参数，实体类参数等
+     -->
+    <insert id="addPost" parameterType="com.bbs.post.model.DO.PostDO" keyProperty="postId" useGeneratedKeys="true" >
+        insert into T_BBS_POST 
+        values(#{postId}, #{postTitle}, #{plateId}, #{replyCount}, #{lastBy}, #{lastDate}, #{keyword}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{deleteFlag})
+    </insert>
+    
+    <!-- 
+        update：更新方法
+            id：更新方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
+            parameterType：更新方法参数类型，可以是简单数据类型，集合参数，实体类参数等
+     -->
+    <update id="updatePost" parameterType="com.bbs.post.model.DO.PostDO">
+        update T_BBS_POST post 
+           set post.POST_TITLE  = #{postTitle},  post.KEYWORD        = #{keyword},  
+               post.UPDATE_BY   = #{updateBy},   post.UPDATE_DATE    = #{updateDate}
+         where post.POST_ID     = #{postId}
+    </update>
+    
+    <update id="updatePostLastReply">
+        update T_BBS_POST post 
+           set post.REPLY_COUNT = #{replyCount}, post.LAST_BY   = #{lastBy},  
+               post.LAST_DATE   = #{lastDate},   post.UPDATE_BY = #{updateBy},   
+               post.UPDATE_DATE = #{updateDate}
+         where post.POST_ID     = #{postId}
+    </update>
+    
+    <!-- 
+        delete：删除方法（此处delete方法仍然使用update语句，因此delete标签主要是用于标记区别）
+            id：删除方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
+            parameterType：删除方法参数类型，可以是简单数据类型，集合参数，实体类参数等
+     -->
+    <delete id="deletePost" parameterType="long">
+        update T_BBS_POST post 
+           set post.DELETE_FLAG = -1
+         where post.POST_ID = #{id}
+    </delete>
+</mapper>

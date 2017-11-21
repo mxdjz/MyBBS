@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<project name="bbs" default="" basedir=".">
+	<property name="src.dir" value="${basedir}/src/main/java" />
+	
+	<path id="xdoclet.task.classpath">
+		<fileset dir="${basedir}/lib">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
+	<!--
+	<target name="init">
+		<taskdef
+            name="hibernatedoclet"
+            classname="xdoclet.modules.hibernate.HibernateDocletTask"
+            classpathref="xdoclet.task.classpath"  />
+	</target>
+		
+	<target name="hibernate" depends="init" description="生成Mapping文件...">
+		<hibernatedoclet
+            destdir="${src.dir}"
+            mergedir="${src.dir}"
+            excludedtags="@version,@author,@todo,@see"
+            force="false" >
+
+            <fileset dir="${src.dir}">
+                <include name="**/model/DO/*.java"/>
+            </fileset>
+
+            <hibernate version="2.0"/>
+
+		</hibernatedoclet>
+	</target>-->
+</project>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+    使用mapper接口形式
+    namespace：mapper接口路径
+ -->
+<mapper namespace="com.bbs.post.mapper.ReplyMapper">
+    <!-- 
+        resultMap：自定义查询结果集
+             type：结果集类型，可使用map、实体类
+             id  ：自定义结果集唯一标识
+     -->
+<!--     <resultMap type="com.bbs.post.model.DO.ReplyDO" id="reply"> -->
+<!--         id字段 -->
+<!--         <id property="replyId" column="REPLY_ID" javaType="long" jdbcType="BIGINT" /> -->
+<!--         一般属性字段 -->
+<!--         <result property="postId" column="POST_ID" javaType="long" jdbcType="BIGINT" /> -->
+<!--         <result property="level" column="LEVEL" javaType="int" jdbcType="INTEGER" /> -->
+<!--         <result property="replyContent" column="REPLY_CONTENT" javaType="string" jdbcType="VARCHAR" /> -->
+<!--     </resultMap> -->
+    
+    <!-- 
+        select：查询方法
+            id：查询方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
+            parameterType：查询方法参数类型，可以是简单数据类型，集合参数，实体类参数等
+            resultMap：返回结果集类型，引用当前映射文件内已定义的一个结果集
+    -->
+    
+    <select id="findReplyById" parameterType="long" resultType="com.bbs.post.model.DO.ReplyDO" >
+        select * from T_BBS_REPLY where REPLY_ID = #{id}
+    </select>
+    
+    <select id="findReplyByPostId" resultType="com.bbs.post.model.DO.ReplyDO" >
+        select * from T_BBS_REPLY where POST_ID = #{postId}
+        <if test="index !=0 or num!=0">
+            limit #{index}, #{num}
+        </if>
+    </select>
+    
+    <!-- 
+        insert：插入方法
+            id：插入方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
+            parameterType：插入方法参数类型，可以是简单数据类型，集合参数，实体类参数等
+     -->
+    <insert id="addReply" parameterType="com.bbs.post.model.DO.ReplyDO" keyProperty="replyId" useGeneratedKeys="true" >
+        insert into T_BBS_REPLY 
+        values(#{replyId}, #{postId}, #{level}, #{replyContent}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{deleteFlag})
+    </insert>
+    
+    <!-- 
+        update：更新方法
+            id：更新方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
+            parameterType：更新方法参数类型，可以是简单数据类型，集合参数，实体类参数等
+     -->
+    <update id="updateReply" parameterType="com.bbs.post.model.DO.ReplyDO">
+        update T_BBS_REPLY reply 
+           set reply.REPLY_CONTENT = #{replyContent}, reply.UPDATE_BY = #{updateBy}, reply.UPDATE_DATE = #{updateDate}
+         where reply.REPLY_ID      = #{replyId}
+    </update>
+    
+    <!-- 
+        delete：删除方法（此处delete方法仍然使用update语句，因此delete标签主要是用于标记区别）
+            id：删除方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
+            parameterType：删除方法参数类型，可以是简单数据类型，集合参数，实体类参数等
+     -->
+    <delete id="deleteReply" parameterType="long">
+        update T_BBS_REPLY reply 
+           set reply.DELETE_FLAG = -1
+         where reply.REPLY_ID = #{id}
+    </delete>
+</mapper>

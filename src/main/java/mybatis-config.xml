@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!-- 
+                    配置公共属性
+        resource： 设置外部引用文件
+    -->    
+    <properties resource="mybatis.properties">
+        <!-- 开启属性默认值 -->
+        <property
+            name="org.apache.ibatis.parsing.PropertyParser.enable-default-value" value="true" />
+    </properties>
+    
+    <!-- 设置简写变量 -->
+    <typeAliases>
+        <!-- 简化包路径，mybatis会自动去设置的包路径下扫描映射类 -->
+<!--         <package name="com.bbs"/> -->
+    </typeAliases>
+    
+    
+    
+    <environments default="qy">
+        
+        <!-- mybatis环境配置 -->
+        <environment id="qy">
+
+            <!-- 采用JDBC方式的事务管理 -->
+            <transactionManager type="JDBC" />
+            <!-- 数据源配置 -->
+            <dataSource type="POOLED">
+                <!-- 数据库连接配置 -->
+                <property name="driver" value="${mysql.driver}" />
+                <property name="url" value="${mysql.url}" />
+                <property name="username" value="${mysql.username}" />
+                <property name="password" value="${mysql.password}" />
+                
+                <!-- 数据库连接池配置 -->
+                <property name="poolMaximumActiveConnections" value="${pool.poolMaximumActiveConnections}" />
+                <property name="poolMaximumIdleConnections" value="${pool.poolMaximumIdleConnections}" />
+                <property name="poolTimeToWait" value="${pool.poolTimeToWait}" />
+<!--                 <property name="poolMaximumLocalBadConnectionTolerance" value="${pool.poolMaximumLocalBadConnectionTolerance}" /> -->
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!-- 
+            package：扫描接口所在包路径下的映射配置
+	           mapper配置包含：mapper接口和mapper的xml配置文件（如果使用注解可不包含xml文件），其中接口文件和xml文件名称须相同
+        -->
+<!--         <package name="com.bbs.notice.mapper"/> -->
+<!--         <package name="com.bbs.post.mapper"/> -->
+        <package name="com.bbs.user.mapper"/>
+        
+        <!-- 
+            mapper：指定配置文件路径
+                resource：指定mapper的xml配置文件路径
+                class   ：指定mapper的接口文件路径
+         -->
+<!--         <mapper resource="com/bbs/notice/model/DO/NoticeDO.xml" /> -->
+    </mappers>
+</configuration>

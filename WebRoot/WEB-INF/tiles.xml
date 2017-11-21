@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE tiles-definitions PUBLIC 
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="base" template="/WEB-INF/jsp/template/base.jsp">
+		<put-attribute name="header" value="/WEB-INF/jsp/template/head.jsp" />
+        <put-attribute name="nav" value="/WEB-INF/jsp/template/nav.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="menu" value="/WEB-INF/jsp/template/left.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/template/foot.jsp" />
+	</definition>
+    
+    <definition name="base2" template="/WEB-INF/jsp/template/base2.jsp">
+        <put-attribute name="header" value="/WEB-INF/jsp/template/head.jsp" />
+        <put-attribute name="nav" value="/WEB-INF/jsp/template/nav.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/jsp/template/foot.jsp" />
+    </definition>
+
+    <definition name="bbs.index" extends="base">
+        <put-attribute name="body" value="/WEB-INF/jsp/demo/bbs_index.jsp" />
+    </definition>
+    
+    <definition name="bbs.post.list" extends="base2">
+        <put-attribute name="body" value="/WEB-INF/jsp/demo/bbs_postList.jsp" />
+    </definition>
+    
+    <definition name="bbs.post" extends="base2">
+        <put-attribute name="body" value="/WEB-INF/jsp/demo/bbs_post.jsp" />
+    </definition>
+</tiles-definitions>
