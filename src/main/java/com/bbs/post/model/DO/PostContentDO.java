@@ -9,28 +9,18 @@ public class PostContentDO extends BaseModelDO implements Serializable {
     /**
      * 
      */
-    private static final long serialVersionUID = -3932786319609355984L;
+    private static final long serialVersionUID = 1297692368532642745L;
 
-    private long postContentId;
-
-    private long postId;
+    private Long postContentId;
 
     private String postContent;
 
-    public long getPostContentId() {
+    public Long getPostContentId() {
         return postContentId;
     }
 
-    public void setPostContentId(long postContentId) {
+    public void setPostContentId(Long postContentId) {
         this.postContentId = postContentId;
-    }
-
-    public long getPostId() {
-        return postId;
-    }
-
-    public void setPostId(long postId) {
-        this.postId = postId;
     }
 
     public String getPostContent() {
@@ -44,9 +34,8 @@ public class PostContentDO extends BaseModelDO implements Serializable {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
+        int result = 17;
         result = prime * result + (int) (postContentId ^ (postContentId >>> 32));
-        result = prime * result + (int) (postId ^ (postId >>> 32));
         return result;
     }
 
@@ -61,14 +50,12 @@ public class PostContentDO extends BaseModelDO implements Serializable {
         PostContentDO other = (PostContentDO) obj;
         if (postContentId != other.postContentId)
             return false;
-        if (postId != other.postId)
-            return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "PostContentDO [postContentId=" + postContentId + ", postId=" + postId + "]";
+        return "PostContentDO [postContentId=" + postContentId + "]";
     }
 
 }

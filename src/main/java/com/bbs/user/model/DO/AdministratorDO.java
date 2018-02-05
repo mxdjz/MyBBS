@@ -20,32 +20,21 @@ public class AdministratorDO extends BaseModelDO implements Serializable {
      */
     private static final long serialVersionUID = 4068018339782661776L;
 
-    private int administratorId;
+    private Long administratorId;
 
-    private int memberId;
-
-    public int getAdministratorId() {
+    public Long getAdministratorId() {
         return administratorId;
     }
 
-    public void setAdministratorId(int administratorId) {
+    public void setAdministratorId(Long administratorId) {
         this.administratorId = administratorId;
-    }
-
-    public int getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + administratorId;
-        result = prime * result + memberId;
+        result = prime * result + ((administratorId == null) ? 0 : administratorId.hashCode());
         return result;
     }
 
@@ -58,17 +47,17 @@ public class AdministratorDO extends BaseModelDO implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         AdministratorDO other = (AdministratorDO) obj;
-        if (administratorId != other.administratorId)
-            return false;
-        if (memberId != other.memberId)
+        if (administratorId == null) {
+            if (other.administratorId != null)
+                return false;
+        } else if (!administratorId.equals(other.administratorId))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "AdministratorDO [administratorId=" + administratorId + ", memberId=" + memberId
-                + "]";
+        return "AdministratorDO [administratorId=" + administratorId + "]";
     }
 
 }

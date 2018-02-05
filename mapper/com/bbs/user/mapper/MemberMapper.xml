@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+    使用mapper接口形式
+    namespace：mapper接口路径
+ -->
+<mapper namespace="com.bbs.user.mapper.MemberMapper">
+    <!-- 
+        resultMap：自定义查询结果集
+             type：结果集类型，可使用map、实体类
+             id  ：自定义结果集唯一标识
+     -->
+    <resultMap type="com.bbs.user.model.DO.MemberDO" id="member">
+        <!-- id字段 -->
+        <id property="memberId"        column="MEMBER_ID"   javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <!-- 一般属性字段 -->
+        <result property="nickName"    column="NICK_NAME"   javaType="string"            jdbcType="VARCHAR" />
+        <result property="mobile"      column="MOBILE"      javaType="string"            jdbcType="VARCHAR" />
+        <result property="qq"          column="QQ"          javaType="string"            jdbcType="VARCHAR" />
+        <result property="email"       column="EMAIL"       javaType="string"            jdbcType="VARCHAR" />
+        <result property="address"     column="ADDRESS"     javaType="string"            jdbcType="VARCHAR" />
+        <result property="nationality" column="NATIONALITY" javaType="string"            jdbcType="VARCHAR" />
+        <result property="folk"        column="FOLK"        javaType="string"            jdbcType="VARCHAR" />
+        
+        <result property="createBy"    column="CREATE_BY"   javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <result property="createDate"  column="CREATE_DATE" javaType="java.util.Date"    jdbcType="TIME" />
+        <result property="updateBy"    column="UPDATE_BY"   javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <result property="updateDate"  column="UPDATE_DATE" javaType="java.util.Date"    jdbcType="TIME" />
+        <result property="deleteFlag"  column="DELETE_FLAG" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        
+        <association property="user"   column="USER_ID" javaType="com.bbs.user.model.DO.UserDO" 
+            select="com.bbs.user.mapper.UserMapper.findUserById" />
+        <association property="administrator"   column="ADMINISTRATOR_ID" javaType="com.bbs.user.model.DO.AdministratorDO" 
+            select="com.bbs.user.mapper.AdministratorMapper.findAdministratorById" />
+    </resultMap>
+    
+    <insert id="addMember" parameterType="com.bbs.user.model.DO.MemberDO" keyProperty="memberId" useGeneratedKeys="true" >
+        insert into T_BBS_MEMBER(MEMBER_ID, USER_ID, ADMINISTRATOR_ID, NICK_NAME, MOBILE, QQ, EMAIL, ADDRESS, NATIONALITY, FOLK, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, DELETE_FLAG)
+        values(#{memberId}, #{user.userId}, #{administrator.administratorId}, #{nickName}, #{mobile}, #{qq}, #{email}, #{address}, #{nationality}, #{folk}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{deleteFlag})
+    </insert>
+    
+    <update id="updateMember" parameterType="com.bbs.user.model.DO.MemberDO">
+        update T_BBS_MEMBER member 
+           set member.NICK_NAME = #{nickName}, member.MOBILE  = #{mobile},     member.QQ  = #{qq}, 
+               member.EMAIL     = #{email},    member.ADDRESS = #{address},    member.NATIONALITY = #{nationality},
+               member.FOLK      = #{folk},     member.UPDATE_BY = #{updateBy}, member.UPDATE_DATE = #{updateDate}
+         where member.MEMBER_ID = #{memberId}
+    </update>
+    
+    <delete id="deleteMember" parameterType="java.lang.Long">
+        update T_BBS_MEMBER member 
+           set member.DELETE_FLAG = -1
+         where member.MEMBER_ID   = #{id}
+    </delete>
+</mapper>

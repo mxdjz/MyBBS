@@ -13,13 +13,12 @@ import com.bbs.common.model.DO.BaseModelDO;
  */
 public class PostDO extends BaseModelDO implements Serializable {
 
-
     /**
      * 
      */
     private static final long serialVersionUID = 2650487875706691995L;
 
-    private long postId;
+    private Long postId;
 
     /**
      * 主题帖标题
@@ -29,17 +28,17 @@ public class PostDO extends BaseModelDO implements Serializable {
     /**
      * 主题帖所属板块
      */
-    private int plateId;
+    private Long plateId;
 
     /**
      * 回复数目
      */
-    private int replyCount = 0;
+    private Integer replyCount = 0;
 
     /**
      * 最后回复人
      */
-    private long lastBy;
+    private Long lastBy;
 
     /**
      * 最后回复时间
@@ -51,11 +50,13 @@ public class PostDO extends BaseModelDO implements Serializable {
      */
     private String keyword;
 
-    public long getPostId() {
+    private PostContentDO postContent;
+
+    public Long getPostId() {
         return postId;
     }
 
-    public void setPostId(long postId) {
+    public void setPostId(Long postId) {
         this.postId = postId;
     }
 
@@ -67,27 +68,27 @@ public class PostDO extends BaseModelDO implements Serializable {
         this.postTitle = postTitle;
     }
 
-    public int getPlateId() {
+    public Long getPlateId() {
         return plateId;
     }
 
-    public void setPlateId(int plateId) {
+    public void setPlateId(Long plateId) {
         this.plateId = plateId;
     }
 
-    public int getReplyCount() {
+    public Integer getReplyCount() {
         return replyCount;
     }
 
-    public void setReplyCount(int replyCount) {
+    public void setReplyCount(Integer replyCount) {
         this.replyCount = replyCount;
     }
 
-    public long getLastBy() {
+    public Long getLastBy() {
         return lastBy;
     }
 
-    public void setLastBy(long lastBy) {
+    public void setLastBy(Long lastBy) {
         this.lastBy = lastBy;
     }
 
@@ -107,11 +108,19 @@ public class PostDO extends BaseModelDO implements Serializable {
         this.keyword = keyword;
     }
 
+    public PostContentDO getPostContent() {
+        return postContent;
+    }
+
+    public void setPostContent(PostContentDO postContent) {
+        this.postContent = postContent;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
-        result = prime * result + plateId;
+        int result = 17;
+        result = (int) (prime * result + plateId);
         result = prime * result + (int) (postId ^ (postId >>> 32));
         return result;
     }

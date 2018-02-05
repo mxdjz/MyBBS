@@ -1,6 +1,7 @@
 package com.bbs.user.model.DO;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.bbs.common.model.DO.BaseModelDO;
 
@@ -20,7 +21,7 @@ public class UserDO extends BaseModelDO implements Serializable {
      */
     private static final long serialVersionUID = 652776462190616854L;
 
-    private long userId;
+    private Long userId;
 
     /**
      * 用户登录名
@@ -28,15 +29,25 @@ public class UserDO extends BaseModelDO implements Serializable {
     private String loginName;
 
     /**
-     * 用户密码（使用md5加密保存）
+     * 最后登录时间
+     */
+    private Date lastLoginDate;
+
+    /**
+     * 是否被冻结
+     */
+    private String isFreeze;
+
+    /**
+     * 用户密码（使用两次md5加密保存）
      */
     private String password;
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -56,10 +67,26 @@ public class UserDO extends BaseModelDO implements Serializable {
         this.password = password;
     }
 
+    public Date getLastLoginDate() {
+        return lastLoginDate;
+    }
+
+    public void setLastLoginDate(Date lastLoginDate) {
+        this.lastLoginDate = lastLoginDate;
+    }
+
+    public String getIsFreeze() {
+        return isFreeze;
+    }
+
+    public void setIsFreeze(String isFreeze) {
+        this.isFreeze = isFreeze;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
+        int result = 17;
         result = prime * result + ((loginName == null) ? 0 : loginName.hashCode());
         result = (int) (prime * result + userId);
         return result;

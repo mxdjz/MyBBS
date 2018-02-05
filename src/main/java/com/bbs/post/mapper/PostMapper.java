@@ -3,6 +3,8 @@ package com.bbs.post.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Select;
 
 import com.bbs.post.model.DO.PostDO;
 
@@ -13,6 +15,8 @@ public interface PostMapper {
      * @param id
      * @return
      */
+    @Select("select * from T_BBS_POST where POST_ID = #{id}")
+    @ResultMap("post")
     public PostDO findPostById(Long id);
     
     /**

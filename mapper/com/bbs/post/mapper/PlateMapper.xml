@@ -11,30 +11,22 @@
              type：结果集类型，可使用map、实体类
              id  ：自定义结果集唯一标识
      -->
-<!--     <resultMap type="com.bbs.post.model.DO.PlateDO" id="plate"> -->
-<!--         id字段 -->
-<!--         <id property="plateId" column="PLATE_ID" javaType="int" jdbcType="INTEGER" /> -->
-<!--         一般属性字段 -->
-<!--         <result property="plateTitle" column="PLATE_TITLE" javaType="string" jdbcType="VARCHAR" /> -->
-<!--         <result property="plateSubTitle" column="PLATE_SUB_TITLE" javaType="string" jdbcType="VARCHAR" /> -->
-<!--         <result property="plateParentId" column="PLATE_PARENT_ID" javaType="int" jdbcType="INTEGER" /> -->
-<!--         <result property="imageUrl" column="IMAGE_URL" javaType="string" jdbcType="VARCHAR" /> -->
-<!--         <result property="description" column="DESCRI" javaType="string" jdbcType="VARCHAR" /> -->
-<!--     </resultMap> -->
-    
-    <!-- 
-        select：查询方法
-            id：查询方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
-            parameterType：查询方法参数类型，可以是简单数据类型，集合参数，实体类参数等
-            resultMap：返回结果集类型，引用当前映射文件内已定义的一个结果集
-    -->
-    <select id="getAllPlate" resultType="com.bbs.post.model.DO.PlateDO">
-        select * from T_BBS_PLATE
-    </select>
-    
-    <select id="findPlateById" parameterType="int" resultType="com.bbs.post.model.DO.PlateDO">
-        select * from T_BBS_PLATE where PLATE_ID = #{id}
-    </select>
+    <resultMap type="com.bbs.post.model.DO.PlateDO" id="plate">
+        <!-- id字段 -->
+        <id     property="plateId"       column="PLATE_ID"        javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <!-- 一般属性字段 -->
+        <result property="plateTitle"    column="PLATE_TITLE"     javaType="string"            jdbcType="VARCHAR" />
+        <result property="plateSubTitle" column="PLATE_SUB_TITLE" javaType="string"            jdbcType="VARCHAR" />
+        <result property="plateParentId" column="PLATE_PARENT_ID" javaType="int"               jdbcType="INTEGER" />
+        <result property="imageUrl"      column="IMAGE_URL"       javaType="string"            jdbcType="VARCHAR" />
+        <result property="description"   column="DESCRI"          javaType="string"            jdbcType="VARCHAR" />
+        
+        <result property="createBy"      column="CREATE_BY"       javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <result property="createDate"    column="CREATE_DATE"     javaType="java.util.Date"    jdbcType="TIME" />
+        <result property="updateBy"      column="UPDATE_BY"       javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <result property="updateDate"    column="UPDATE_DATE"     javaType="java.util.Date"    jdbcType="TIME" />
+        <result property="deleteFlag"    column="DELETE_FLAG"     javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </resultMap>
     
     <!-- 
         insert：插入方法
@@ -42,7 +34,7 @@
             parameterType：插入方法参数类型，可以是简单数据类型，集合参数，实体类参数等
      -->
     <insert id="addPlate" parameterType="com.bbs.post.model.DO.PlateDO" keyProperty="plateId" useGeneratedKeys="true" >
-        insert into T_BBS_PLATE 
+        insert into t_bbs_plate(PLATE_ID, PLATE_TITLE, PLATE_SUB_TITLE, PLATE_PARENT_ID, IMAGE_URL, DESCRI, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, DELETE_FLAG) 
         values(#{plateId}, #{plateTitle}, #{plateSubTitle}, #{plateParentId}, #{imageUrl}, #{description}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{deleteFlag})
     </insert>
     
@@ -52,7 +44,7 @@
             parameterType：更新方法参数类型，可以是简单数据类型，集合参数，实体类参数等
      -->
     <update id="updatePlate" parameterType="com.bbs.post.model.DO.PlateDO">
-        update T_BBS_PLATE plate 
+        update t_bbs_plate plate 
            set plate.PLATE_TITLE = #{plateTitle}, plate.PLATE_SUB_TITLE = #{plateSubTitle},
            	   plate.IMAGE_URL   = #{imageUrl},   plate.DESCRI = #{description},  
                plate.UPDATE_BY   = #{updateBy},   plate.UPDATE_DATE = #{updateDate}
@@ -64,8 +56,8 @@
             id：删除方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
             parameterType：删除方法参数类型，可以是简单数据类型，集合参数，实体类参数等
      -->
-    <delete id="deletePlate" parameterType="int">
-        update T_BBS_PLATE plate 
+    <delete id="deletePlate" parameterType="java.lang.Long">
+        update t_bbs_plate plate 
            set plate.DELETE_FLAG = -1
          where plate.PLATE_ID = #{id}
     </delete>

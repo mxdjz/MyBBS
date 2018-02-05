@@ -17,7 +17,7 @@ public class PlateDO extends BaseModelDO implements Serializable {
      */
     private static final long serialVersionUID = 2567552367215437546L;
 
-    private int plateId;
+    private Long plateId;
 
     /**
      * 板块标题
@@ -32,7 +32,7 @@ public class PlateDO extends BaseModelDO implements Serializable {
     /**
      * 父板块ID
      */
-    private int plateParentId;
+    private Long plateParentId;
 
     /**
      * 缩略图URL
@@ -44,11 +44,11 @@ public class PlateDO extends BaseModelDO implements Serializable {
      */
     private String description;
 
-    public int getPlateId() {
+    public Long getPlateId() {
         return plateId;
     }
 
-    public void setPlateId(int plateId) {
+    public void setPlateId(Long plateId) {
         this.plateId = plateId;
     }
 
@@ -68,11 +68,11 @@ public class PlateDO extends BaseModelDO implements Serializable {
         this.plateSubTitle = plateSubTitle;
     }
 
-    public int getPlateParentId() {
+    public Long getPlateParentId() {
         return plateParentId;
     }
 
-    public void setPlateParentId(int plateParentId) {
+    public void setPlateParentId(Long plateParentId) {
         this.plateParentId = plateParentId;
     }
 
@@ -95,7 +95,7 @@ public class PlateDO extends BaseModelDO implements Serializable {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
+        int result = 17;
         result = prime * result + (int) (plateId ^ (plateId >>> 32));
         return result;
     }

@@ -17,44 +17,57 @@ public class ReplyDO extends BaseModelDO implements Serializable {
      */
     private static final long serialVersionUID = 6858866060338565063L;
 
-    private long replyId;
+    private Long replyId;
 
     /**
      * 回复所属主题贴ID
      */
-    private long postId;
+    private Long postId;
+
+    /**
+     * 父回复ID
+     */
+    private Long parentReplyId;
 
     /**
      * 回复级别，1-对主题帖的回复，2-对回复的回复
      */
-    private int level;
+    private Integer level;
 
     /**
      * 回复内容
      */
     private String replyContent;
 
-    public long getReplyId() {
+    public Long getReplyId() {
         return replyId;
     }
 
-    public void setReplyId(long replyId) {
+    public void setReplyId(Long replyId) {
         this.replyId = replyId;
     }
 
-    public long getPostId() {
+    public Long getPostId() {
         return postId;
     }
 
-    public void setPostId(long postId) {
+    public void setPostId(Long postId) {
         this.postId = postId;
     }
 
-    public int getLevel() {
+    public Long getParentReplyId() {
+        return parentReplyId;
+    }
+
+    public void setParentReplyId(Long parentReplyId) {
+        this.parentReplyId = parentReplyId;
+    }
+
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
@@ -70,8 +83,9 @@ public class ReplyDO extends BaseModelDO implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (int) (postId ^ (postId >>> 32));
-        result = prime * result + (int) (replyId ^ (replyId >>> 32));
+        result = prime * result + ((parentReplyId == null) ? 0 : parentReplyId.hashCode());
+        result = prime * result + ((postId == null) ? 0 : postId.hashCode());
+        result = prime * result + ((replyId == null) ? 0 : replyId.hashCode());
         return result;
     }
 
@@ -84,16 +98,28 @@ public class ReplyDO extends BaseModelDO implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         ReplyDO other = (ReplyDO) obj;
-        if (postId != other.postId)
+        if (parentReplyId == null) {
+            if (other.parentReplyId != null)
+                return false;
+        } else if (!parentReplyId.equals(other.parentReplyId))
             return false;
-        if (replyId != other.replyId)
+        if (postId == null) {
+            if (other.postId != null)
+                return false;
+        } else if (!postId.equals(other.postId))
+            return false;
+        if (replyId == null) {
+            if (other.replyId != null)
+                return false;
+        } else if (!replyId.equals(other.replyId))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "ReplyDO [replyId=" + replyId + ", postId=" + postId + "]";
+        return "ReplyDO [replyId=" + replyId + ", postId=" + postId + ", parentReplyId="
+                + parentReplyId + "]";
     }
 
 }

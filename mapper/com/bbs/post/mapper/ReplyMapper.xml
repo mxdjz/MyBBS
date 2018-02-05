@@ -11,27 +11,20 @@
              type：结果集类型，可使用map、实体类
              id  ：自定义结果集唯一标识
      -->
-<!--     <resultMap type="com.bbs.post.model.DO.ReplyDO" id="reply"> -->
-<!--         id字段 -->
-<!--         <id property="replyId" column="REPLY_ID" javaType="long" jdbcType="BIGINT" /> -->
-<!--         一般属性字段 -->
-<!--         <result property="postId" column="POST_ID" javaType="long" jdbcType="BIGINT" /> -->
-<!--         <result property="level" column="LEVEL" javaType="int" jdbcType="INTEGER" /> -->
-<!--         <result property="replyContent" column="REPLY_CONTENT" javaType="string" jdbcType="VARCHAR" /> -->
-<!--     </resultMap> -->
+    <resultMap type="com.bbs.post.model.DO.ReplyDO" id="reply">
+        <id     property="replyId"       column="REPLY_ID"        javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <result property="postId"        column="POST_ID"         javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <result property="parentReplyId" column="PARENT_REPLY_ID" javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <result property="level"         column="LEVEL"           javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result property="replyContent"  column="REPLY_CONTENT"   javaType="string"            jdbcType="VARCHAR" />
+        <result property="createBy"      column="CREATE_BY"       javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <result property="createDate"    column="CREATE_DATE"     javaType="java.util.Date"    jdbcType="TIME" />
+        <result property="updateBy"      column="UPDATE_BY"       javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <result property="updateDate"    column="UPDATE_DATE"     javaType="java.util.Date"    jdbcType="TIME" />
+        <result property="deleteFlag"    column="DELETE_FLAG"     javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </resultMap>
     
-    <!-- 
-        select：查询方法
-            id：查询方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
-            parameterType：查询方法参数类型，可以是简单数据类型，集合参数，实体类参数等
-            resultMap：返回结果集类型，引用当前映射文件内已定义的一个结果集
-    -->
-    
-    <select id="findReplyById" parameterType="long" resultType="com.bbs.post.model.DO.ReplyDO" >
-        select * from T_BBS_REPLY where REPLY_ID = #{id}
-    </select>
-    
-    <select id="findReplyByPostId" resultType="com.bbs.post.model.DO.ReplyDO" >
+    <select id="findReplyByPostId" resultMap="reply">
         select * from T_BBS_REPLY where POST_ID = #{postId}
         <if test="index !=0 or num!=0">
             limit #{index}, #{num}
@@ -44,8 +37,8 @@
             parameterType：插入方法参数类型，可以是简单数据类型，集合参数，实体类参数等
      -->
     <insert id="addReply" parameterType="com.bbs.post.model.DO.ReplyDO" keyProperty="replyId" useGeneratedKeys="true" >
-        insert into T_BBS_REPLY 
-        values(#{replyId}, #{postId}, #{level}, #{replyContent}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{deleteFlag})
+        insert into T_BBS_REPLY(REPLY_ID, POST_ID, PARENT_REPLY_ID, LEVEL, REPLY_CONTENT, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, DELETE_FLAG) 
+        values(#{replyId}, #{postId}, #{parentReplyId}, #{level}, #{replyContent}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{deleteFlag})
     </insert>
     
     <!-- 
@@ -64,7 +57,7 @@
             id：删除方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
             parameterType：删除方法参数类型，可以是简单数据类型，集合参数，实体类参数等
      -->
-    <delete id="deleteReply" parameterType="long">
+    <delete id="deleteReply" parameterType="java.lang.Long">
         update T_BBS_REPLY reply 
            set reply.DELETE_FLAG = -1
          where reply.REPLY_ID = #{id}

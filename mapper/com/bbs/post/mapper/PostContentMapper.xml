@@ -6,52 +6,31 @@
     namespace：mapper接口路径
  -->
 <mapper namespace="com.bbs.post.mapper.PostContentMapper">
-    <!-- 
-        resultMap：自定义查询结果集
-             type：结果集类型，可使用map、实体类
-             id  ：自定义结果集唯一标识
-     -->
+
+     <resultMap type="com.bbs.post.model.DO.PostContentDO" id="postContent">
+        <id     property="postContentId" column="POST_CONTENT_ID" javaType="java.lang.Long" jdbcType="INTEGER" />
+        <result property="postContent"   column="POST_CONTENT"    javaType="string"            jdbcType="VARCHAR" />
+        <result property="createBy"      column="CREATE_BY"       javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <result property="createDate"    column="CREATE_DATE"     javaType="java.util.Date"    jdbcType="TIME" />
+        <result property="updateBy"      column="UPDATE_BY"       javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <result property="updateDate"    column="UPDATE_DATE"     javaType="java.util.Date"    jdbcType="TIME" />
+        <result property="deleteFlag"    column="DELETE_FLAG"     javaType="java.lang.Integer" jdbcType="INTEGER" />
+     </resultMap>
     
-    <!-- 
-        select：查询方法
-            id：查询方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
-            parameterType：查询方法参数类型，可以是简单数据类型，集合参数，实体类参数等
-            resultMap：返回结果集类型，引用当前映射文件内已定义的一个结果集
-    -->
-    
-    <select id="findPostById" parameterType="long" resultType="com.bbs.post.model.DO.PostContentDO" >
-        select * from T_BBS_POST$CONTENT where POST_CONTENT_ID = #{id}
-    </select>
-    
-    <!-- 
-        insert：插入方法
-            id：插入方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
-            parameterType：插入方法参数类型，可以是简单数据类型，集合参数，实体类参数等
-     -->
     <insert id="addPostContent" parameterType="com.bbs.post.model.DO.PostContentDO" keyProperty="postContentId" useGeneratedKeys="true" >
-        insert into T_BBS_POST$CONTENT 
-        values(#{postContentId}, #{postId}, #{postContent}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{deleteFlag})
+        insert into T_BBS_POST$CONTENT(POST_CONTENT_ID, POST_CONTENT, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, DELETE_FLAG)
+        values(#{postContentId}, #{postContent}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{deleteFlag})
     </insert>
     
-    <!-- 
-        update：更新方法
-            id：更新方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
-            parameterType：更新方法参数类型，可以是简单数据类型，集合参数，实体类参数等
-     -->
     <update id="updatePostContent" parameterType="com.bbs.post.model.DO.PostContentDO">
-        update T_BBS_POST$CONTENT pc 
-           set pc.POST_CONTENT   = #{postContent}, pc.UPDATE_BY = #{updateBy}, pc.UPDATE_DATE = #{updateDate}
-         where pc.POST_CONTENTID = #{postContentId}
+        update T_BBS_POST$CONTENT postContent 
+           set postContent.POST_TITLE = #{postContent}, post.UPDATE_BY = #{updateBy}, postContent.UPDATE_DATE = #{updateDate}
+         where postContent.POST_CONTENT_ID = #{postContentId}
     </update>
     
-    <!-- 
-        delete：删除方法（此处delete方法仍然使用update语句，因此delete标签主要是用于标记区别）
-            id：删除方法名称，如果使用接口映射定义，当前值须与接口中对应方法名称相同
-            parameterType：删除方法参数类型，可以是简单数据类型，集合参数，实体类参数等
-     -->
-    <delete id="deletePostContent" parameterType="long">
-        update T_BBS_POST$CONTENT pc 
-           set pc.DELETE_FLAG = -1
-         where pc.POST_CONTENTID = #{id}
+    <delete id="deletePostContent" parameterType="java.lang.Long">
+        update T_BBS_POST$CONTENT postContent 
+           set ppostContentost.DELETE_FLAG = -1
+         where postContent.POST_CONTENT_ID = #{id}
     </delete>
 </mapper>

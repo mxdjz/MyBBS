@@ -1,5 +1,8 @@
 package com.bbs.post.mapper;
 
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Select;
+
 import com.bbs.post.model.DO.PostContentDO;
 
 public interface PostContentMapper {
@@ -9,7 +12,9 @@ public interface PostContentMapper {
      * @param id
      * @return
      */
-    public PostContentDO findPostById(Long id);
+    @Select("select * from T_BBS_POST$CONTENT where POST_CONTENT_ID = #{id}")
+    @ResultMap("postContent")
+    public PostContentDO findPostContentById(Long id);
     
     /**
      * 添加一个主题帖信息

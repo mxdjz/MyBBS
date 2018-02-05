@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+    使用mapper接口形式
+    namespace：mapper接口路径
+ -->
+<mapper namespace="com.bbs.user.mapper.AdministratorMapper">
+    <resultMap type="com.bbs.user.model.DO.AdministratorDO" id="administrator">
+        <!-- id字段 -->
+        <id property="administratorId" column="ADMINISTRATOR_ID" javaType="java.lang.Long"    jdbcType="INTEGER" />
+        
+        <result property="createBy"    column="CREATE_BY"        javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <result property="createDate"  column="CREATE_DATE"      javaType="java.util.Date"    jdbcType="TIME" />
+        <result property="updateBy"    column="UPDATE_BY"        javaType="java.lang.Long"    jdbcType="INTEGER" />
+        <result property="updateDate"  column="UPDATE_DATE"      javaType="java.util.Date"    jdbcType="TIME" />
+        <result property="deleteFlag"  column="DELETE_FLAG"      javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <insert id="addAdministrator" parameterType="com.bbs.user.model.DO.AdministratorDO" keyProperty="memberId" useGeneratedKeys="true" >
+        insert into T_BBS_ADMINISTRATOR 
+        values(#{administratorId}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{deleteFlag})
+    </insert>
+    
+    <update id="updateAdministrator" parameterType="com.bbs.user.model.DO.AdministratorDO">
+        update T_BBS_ADMINISTRATOR administrator 
+           set administrator.UPDATE_BY          = #{updateBy}, administrator.UPDATE_DATE = #{updateDate}
+         where administrator.ADMINISTRATOR_ID   = #{memberId}
+    </update>
+    
+    <delete id="deleteAdministrator" parameterType="java.lang.Long">
+        update T_BBS_ADMINISTRATOR administrator 
+           set administrator.DELETE_FLAG = -1
+         where administrator.MEMBER_ID   = #{id}
+    </delete>
+</mapper>

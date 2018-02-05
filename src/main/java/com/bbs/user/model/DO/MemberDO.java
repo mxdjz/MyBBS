@@ -18,11 +18,13 @@ public class MemberDO extends BaseModelDO implements Serializable {
     /**
      * 
      */
-    private static final long serialVersionUID = 860718347702581075L;
+    private static final long serialVersionUID = -8829094004805106395L;
 
-    private int memberId;
+    private Long memberId;
 
-    private int userId;
+    private UserDO user;
+
+    private AdministratorDO administrator;
 
     /**
      * 昵称
@@ -59,20 +61,28 @@ public class MemberDO extends BaseModelDO implements Serializable {
      */
     private String folk;
 
-    public int getMemberId() {
+    public Long getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(int memberId) {
+    public void setMemberId(Long memberId) {
         this.memberId = memberId;
     }
 
-    public int getUserId() {
-        return userId;
+    public UserDO getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(UserDO user) {
+        this.user = user;
+    }
+
+    public AdministratorDO getAdministrator() {
+        return administrator;
+    }
+
+    public void setAdministrator(AdministratorDO administrator) {
+        this.administrator = administrator;
     }
 
     public String getNickName() {
@@ -134,9 +144,8 @@ public class MemberDO extends BaseModelDO implements Serializable {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
-        result = prime * result + memberId;
-        result = prime * result + userId;
+        int result = 17;
+        result = prime * result + ((memberId == null) ? 0 : memberId.hashCode());
         return result;
     }
 
@@ -149,16 +158,17 @@ public class MemberDO extends BaseModelDO implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         MemberDO other = (MemberDO) obj;
-        if (memberId != other.memberId)
-            return false;
-        if (userId != other.userId)
+        if (memberId == null) {
+            if (other.memberId != null)
+                return false;
+        } else if (!memberId.equals(other.memberId))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "MemberDO [memberId=" + memberId + ", userId=" + userId + "]";
+        return "MemberDO [memberId=" + memberId + "]";
     }
 
 }

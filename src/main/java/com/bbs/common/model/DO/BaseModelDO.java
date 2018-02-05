@@ -2,8 +2,6 @@ package com.bbs.common.model.DO;
 
 import java.util.Date;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * 公共数据库字段
  * 
@@ -15,7 +13,7 @@ public class BaseModelDO {
     /**
      * 创建人
      */
-    private long createBy;
+    private Long createBy;
 
     /**
      * 创建时间
@@ -25,7 +23,7 @@ public class BaseModelDO {
     /**
      * 更新人
      */
-    private long updateBy;
+    private Long updateBy;
 
     /**
      * 更新时间
@@ -35,13 +33,13 @@ public class BaseModelDO {
     /**
      * 删除标识，0-未删除，1-已删除
      */
-    private int deleteFlag;
+    private Integer deleteFlag;
 
-    public long getCreateBy() {
+    public Long getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(long createBy) {
+    public void setCreateBy(Long createBy) {
         this.createBy = createBy;
     }
 
@@ -53,11 +51,11 @@ public class BaseModelDO {
         this.createDate = createDate;
     }
 
-    public long getUpdateBy() {
+    public Long getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(long updateBy) {
+    public void setUpdateBy(Long updateBy) {
         this.updateBy = updateBy;
     }
 
@@ -69,18 +67,18 @@ public class BaseModelDO {
         this.updateDate = updateDate;
     }
 
-    public int getDeleteFlag() {
+    public Integer getDeleteFlag() {
         return deleteFlag;
     }
 
-    public void setDeleteFlag(int deleteFlag) {
+    public void setDeleteFlag(Integer deleteFlag) {
         this.deleteFlag = deleteFlag;
     }
 
     /**
      * 初始化数据信息
      */
-    public void initBaseDO(int userId) {
+    public void initBaseDO(Long userId) {
         if (userId > -1) {
             this.createBy = userId;
             this.updateBy = userId;
@@ -94,10 +92,17 @@ public class BaseModelDO {
     /**
      * 更新数据信息
      */
-    public void updateBaseDO(int userId) {
+    public void updateBaseDO(Long userId) {
         if (userId > -1) {
             this.updateBy = userId;
         }
         this.updateDate = new Date();
+    }
+    
+    /**
+     * 设置对象逻辑删除状态
+     */
+    public void setDeleteObject() {
+        setDeleteFlag(1);
     }
 }

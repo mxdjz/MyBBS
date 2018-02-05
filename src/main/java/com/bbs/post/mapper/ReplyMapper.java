@@ -3,6 +3,8 @@ package com.bbs.post.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Select;
 
 import com.bbs.post.model.DO.ReplyDO;
 
@@ -13,6 +15,8 @@ public interface ReplyMapper {
      * @param id 回复ID
      * @return
      */
+    @Select("select * from T_BBS_REPLY where REPLY_ID = #{id}")
+    @ResultMap("reply")
     public ReplyDO findReplyById(Long id);
     
     /**
